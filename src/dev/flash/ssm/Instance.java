@@ -1,7 +1,10 @@
 package dev.flash.ssm;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -53,9 +56,23 @@ public class Instance implements Runnable {
 			System.out.println(e.getCause());
 		}*/
 		
+		
+		BufferedImage image = ImageLoader.loadImage("/wat.png");
+		BufferedImage[] images = new BufferedImage[3];
+		for(int i = 0; i < images.length; i++) {
+			images[i] = image;
+		}
+		lineImage = Assembler.assembleLine(images);
+		File outputfile = new File("res/saved.png");
+		try {
+			ImageIO.write(lineImage, "png", outputfile);
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-
+	BufferedImage lineImage;
+	
 	private void tick(double delta) {
 	}
 	
@@ -75,8 +92,8 @@ public class Instance implements Runnable {
 		g.setColor(Color.WHITE);
 		
 		//Draw Here
-		
 		//End Draw
+		g.drawImage(lineImage, 100, 100, lineImage.getHeight()*3, lineImage.getHeight(), null);
 		bs.show();
 		g.dispose();
 	}
@@ -154,7 +171,7 @@ public class Instance implements Runnable {
 	public int getFPS() {
 		return fps;
 	}
-
+	
 	public void setWidth(int width) {
 		this.width = width;
 	}
