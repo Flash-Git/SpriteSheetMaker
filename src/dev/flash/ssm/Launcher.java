@@ -6,7 +6,6 @@ package dev.flash.ssm;
 
 public class Launcher {
 	public static void main(String[] args) {
-		Instance instance = new Instance("Spritesheet Maker", 1100, 600);
-		instance.start();
+		Instance.init();
 	}
 }

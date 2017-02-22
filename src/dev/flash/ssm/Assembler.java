@@ -2,6 +2,7 @@ package dev.flash.ssm;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 /**
  * Created by Flash on 21/02/2017.
@@ -10,27 +11,48 @@ import java.awt.image.BufferedImage;
 public class Assembler {
 	
 	public static BufferedImage assembleLine(BufferedImage[] images) {
-		for(int i = 0; i<images.length; i++){
-			images[i] = insertBound(images[i]);
-		}
-			
 		
-		BufferedImage line = new BufferedImage(images.length * images[0].getWidth(), images[0].getHeight(), images[0].getType());
+		BufferedImage[] newImage = new BufferedImage[images.length];
+		
+		for(int i = 0; i < newImage.length; i++) {
+			newImage[i] = insertBound(images[i]);
+		}
+		
+		BufferedImage line = new BufferedImage(newImage.length * newImage[0].getWidth(), newImage[0].getHeight(), newImage[0].getType());
 		Graphics g = line.getGraphics();
-		for(int i = 0; i < images.length; i++) {
-			g.drawImage(images[i], i * images[0].getWidth(), 0, null);
+		for(int i = 0; i < newImage.length; i++) {
+			g.drawImage(newImage[i], i * (newImage[0].getWidth() - 1), 0, null);
 		}
 		return line;
 	}
 	
-	public static BufferedImage insertBound(BufferedImage image){
-		BufferedImage newImage = new BufferedImage(image.getWidth()+1, image.getHeight()+1, image.getType());
+	public static BufferedImage insertBound(BufferedImage image) {
+		BufferedImage newImage = new BufferedImage(image.getWidth() + 2, image.getHeight() + 2, image.getType());
 		
 		Graphics g = newImage.getGraphics();
-		g.drawImage(image, 1, 1, newImage.getWidth(), newImage.getHeight(), null);
+		g.drawImage(image, 1, 1, null);
+		Random rand = new Random();
+		g.setColor(new Color(rand.nextInt(254) + 1, rand.nextInt(254) + 1, rand.nextInt(254) + 1));
+		g.drawRect(0, 0, newImage.getWidth() - 1, newImage.getHeight() - 1);
+		g.setColor(new Color(0, 0, 0));
+		g.drawRect(0, 0, 0, 0);
+		g.drawRect(newImage.getWidth() - 1, 0, 0, 0);
+		g.drawRect(0, newImage.getHeight() - 1, 0, 0);
 		return newImage;
 	}
 	
-	
+	public static BufferedImage assembleRows(BufferedImage[] lines) {
+		int longestRow = 0;
+		for(int i = 0; i < lines.length; i++) {
+			longestRow = (lines[i].getWidth() > longestRow) ? lines[i].getWidth() : longestRow;
+			//System.out.println(longestRow);
+		}
+		BufferedImage newImage = new BufferedImage(longestRow, (lines[0].getHeight()-1)*lines.length+1, lines[0].getType());
+		Graphics g = newImage.getGraphics();
+		for(int i = 0; i < lines.length; i++) {
+			g.drawImage(lines[i], 0, (lines[0].getHeight()-1)*i, null);
+		}
+		return newImage;
+	}
 	
 }

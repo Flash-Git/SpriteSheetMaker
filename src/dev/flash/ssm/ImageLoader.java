@@ -16,6 +16,9 @@ public class ImageLoader {
 		} catch(IOException e) {
 			e.printStackTrace();
 			System.exit(1);
+		} catch(IllegalArgumentException e){
+			e.printStackTrace();
+			System.exit(1);
 		}
 		return null;
 	}
