@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Spritesheet Maker">
+    <output-path>$PROJECT_DIR$</output-path>
+    <root id="archive" name="Spritesheet Maker.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="dir-copy" path="$PROJECT_DIR$" />
+      <element id="directory" name="folder">
+        <element id="module-output" name="SpriteSheetMaker" />
+      </element>
+    </root>
+  </artifact>
+</component>

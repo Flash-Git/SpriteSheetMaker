@@ -46,38 +46,12 @@ public class Instance {
 		BufferedImage sheet = Assembler.assembleRows(lineImages);
 		
 		try {
-			File outputfile = new File("res/Spritesheet.png");
-			
-			ImageIO.write(sheet, "png", outputfile);
+			ImageIO.write(sheet, "png", new File("res/Spritesheet.png"));
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 		
 		System.out.println("FINISHED WITHOUT ERROR");
-		
-		
-		/*
-		lineImages = new BufferedImage[5];
-		
-		BufferedImage image = ImageLoader.loadImage("/wat.png");
-		BufferedImage[] images = new BufferedImage[5];
-		
-		for(int i = 0; i < images.length; i++) {
-			images[i] = image;
-		}
-		for(int i = 0; i < lineImages.length; i++) {
-			lineImages[i] = Assembler.assembleLine(images);
-		}
-		
-		sheet = Assembler.assembleRows(lineImages);
-		try {
-			File outputfile = new File("res/Spritesheet.png");
-			
-			ImageIO.write(sheet, "png", outputfile);
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-		*/
 	}
 	
 	public static String[] getLine(ArrayList<String> strings) {

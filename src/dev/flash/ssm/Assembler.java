@@ -43,14 +43,23 @@ public class Assembler {
 	
 	public static BufferedImage assembleRows(BufferedImage[] lines) {
 		int longestRow = 0;
+		int tallestRow = 0;
+		int totalHeight = 0;
 		for(int i = 0; i < lines.length; i++) {
 			longestRow = (lines[i].getWidth() > longestRow) ? lines[i].getWidth() : longestRow;
+			tallestRow = (lines[i].getHeight() > tallestRow) ? lines[i].getHeight() : tallestRow;
+			totalHeight += lines[i].getHeight() - 1;
 			//System.out.println(longestRow);
 		}
-		BufferedImage newImage = new BufferedImage(longestRow, (lines[0].getHeight()-1)*lines.length+1, lines[0].getType());
+		BufferedImage newImage = new BufferedImage(longestRow, totalHeight + 1, lines[0].getType());
 		Graphics g = newImage.getGraphics();
+		
 		for(int i = 0; i < lines.length; i++) {
-			g.drawImage(lines[i], 0, (lines[0].getHeight()-1)*i, null);
+			int y = 0;
+			for(int l = 0; l < i; l++){
+				y+= lines[l].getHeight()-1;
+			}
+			g.drawImage(lines[i], 0, y, null);
 		}
 		return newImage;
 	}
